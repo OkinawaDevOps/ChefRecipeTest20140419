@@ -3,7 +3,7 @@
 ####
 
 ## Version
-default['apache']['version']    = "httpd-2.4.7"
+default['apache']['version']    = "httpd-2.2.24"
 
 ## File
 default['apache']['file_name'] = "#{default['apache']['version']}.tar.gz"

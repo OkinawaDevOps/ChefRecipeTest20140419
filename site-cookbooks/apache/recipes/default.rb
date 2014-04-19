@@ -12,10 +12,16 @@ include_recipe "apache::lib"
 
 
 # Get source file
-remote_file "#{node['apache']['src_dir']}#{node['apache']['file_name']}" do
-  source "#{node['apache']['remote_uri']}"
-end
+# remote_file "#{node['apache']['src_dir']}#{node['apache']['file_name']}" do
+#   source "#{node['apache']['remote_uri']}"
+# end
 
+# apache source
+cookbook_file "source apache" do
+  source "#{node['apache']['file_name']}"
+  path   "#{node['apache']['src_dir']}#{node['apache']['file_name']}"
+  mode    0644
+end
 
 # Install Apache
 bash "install apache" do
