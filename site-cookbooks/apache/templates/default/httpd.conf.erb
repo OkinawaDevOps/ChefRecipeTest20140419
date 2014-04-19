@@ -27,7 +27,7 @@
 # at a local disk.  If you wish to share the same ServerRoot for multiple
 # httpd daemons, you will need to change at least LockFile and PidFile.
 #
-ServerRoot "@@ServerRoot@@"
+ServerRoot <%= node['apache']['dir'] %>
 
 #
 # Listen: Allows you to bind Apache to specific IP addresses and/or
@@ -38,7 +38,7 @@ ServerRoot "@@ServerRoot@@"
 # prevent Apache from glomming onto all bound IP addresses.
 #
 #Listen 12.34.56.78:80
-Listen @@Port@@
+Listen <%= node['apache']['port'] %>
 
 #
 # Dynamic Shared Object (DSO) Support
@@ -52,7 +52,7 @@ Listen @@Port@@
 # Example:
 # LoadModule foo_module modules/mod_foo.so
 #
-@@LoadModule@@
+#@@LoadModule@@
 
 <IfModule !mpm_netware_module>
 <IfModule !mpm_winnt_module>
@@ -87,7 +87,7 @@ Group daemon
 # e-mailed.  This address appears on some server-generated pages, such
 # as error documents.  e.g. admin@your-domain.com
 #
-ServerAdmin you@example.com
+ServerAdmin <%= node['apache']['server_admin'] %>
 
 #
 # ServerName gives the name and port that the server uses to identify itself.
@@ -97,13 +97,14 @@ ServerAdmin you@example.com
 # If your host doesn't have a registered DNS name, enter its IP address here.
 #
 #ServerName www.example.com:@@Port@@
+ServerName vagrant-centos65.vagrantup.com:<%= node['apache']['port'] %>
 
 #
 # DocumentRoot: The directory out of which you will serve your
 # documents. By default, all requests are taken from this directory, but
 # symbolic links and aliases may be used to point to other locations.
 #
-DocumentRoot "@exp_htdocsdir@"
+DocumentRoot "<%= node['apache']['document_root'] %>"
 
 #
 # Each directory to which Apache has access can be configured with respect
@@ -130,7 +131,7 @@ DocumentRoot "@exp_htdocsdir@"
 #
 # This should be changed to whatever you set DocumentRoot to.
 #
-<Directory "@exp_htdocsdir@">
+<Directory "<%= node['apache']['document_root'] %>">
     #
     # Possible values for the Options directive are "None", "All",
     # or any combination of:
@@ -185,7 +186,7 @@ DocumentRoot "@exp_htdocsdir@"
 # logged here.  If you *do* define an error logfile for a <VirtualHost>
 # container, that host's errors will be logged there and not here.
 #
-ErrorLog "@rel_logfiledir@/error_log"
+ErrorLog <%= node['apache']['error_log'] %>
 
 #
 # LogLevel: Control the number of messages logged to the error_log.
@@ -214,7 +215,7 @@ LogLevel warn
     # define per-<VirtualHost> access logfiles, transactions will be
     # logged therein and *not* in this file.
     #
-    CustomLog "@rel_logfiledir@/access_log" common
+    CustomLog <%= node['apache']['access_log'] %> common
 
     #
     # If you prefer a logfile with access, agent, and referer information
@@ -289,7 +290,7 @@ DefaultType text/plain
     # TypesConfig points to the file containing the list of mappings from
     # filename extension to MIME-type.
     #
-    TypesConfig @rel_sysconfdir@/mime.types
+    TypesConfig conf/mime.types
 
     #
     # AddType allows you to add to or override the MIME configuration

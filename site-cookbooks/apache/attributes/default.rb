@@ -22,9 +22,9 @@ default['apache']['configure']  = "--prefix=#{default['apache']['dir']} --enable
 
 ## Include files
 default['apache']['include_files']  = [
-  "httpd-mpm",
-  "httpd-vhosts",
-  "httpd-ssl"
+#  "httpd-mpm",
+#  "httpd-vhosts",
+#  "httpd-ssl"
 ]
 
 ## Include library
